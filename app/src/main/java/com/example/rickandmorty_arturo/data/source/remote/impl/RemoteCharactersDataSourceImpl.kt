@@ -1,9 +1,9 @@
-package com.example.rickandmorty_arturo.data.source.remote
+package com.example.rickandmorty_arturo.data.source.remote.impl
 
 import com.example.rickandmorty_arturo.data.models.CharacterResult
 import com.example.rickandmorty_arturo.data.models.character.CharacterRemote
+import com.example.rickandmorty_arturo.data.source.remote.RemoteCharactersDataSource
 import com.example.rickandmorty_arturo.data.source.remote.api.CharactersApi
-import com.example.rickandmorty_arturo.domain.data_sources.RemoteCharactersDataSource
 import javax.inject.Inject
 
 class RemoteCharactersDataSourceImpl @Inject constructor(

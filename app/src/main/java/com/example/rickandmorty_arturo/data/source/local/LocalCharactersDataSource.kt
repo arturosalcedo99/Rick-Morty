@@ -1,4 +1,4 @@
-package com.example.rickandmorty_arturo.domain.data_sources
+package com.example.rickandmorty_arturo.data.source.local
 
 import com.example.rickandmorty_arturo.data.models.character.CharacterLocal
 import com.example.rickandmorty_arturo.data.models.character.CharacterRemote

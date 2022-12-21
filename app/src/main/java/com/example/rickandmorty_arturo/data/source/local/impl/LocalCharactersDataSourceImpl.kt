@@ -1,11 +1,11 @@
-package com.example.rickandmorty_arturo.data.source.local
+package com.example.rickandmorty_arturo.data.source.local.impl
 
 import com.example.rickandmorty_arturo.data.mappers.toCharacterRemote
 import com.example.rickandmorty_arturo.data.mappers.toCharacterRemoteList
 import com.example.rickandmorty_arturo.data.models.character.CharacterLocal
 import com.example.rickandmorty_arturo.data.models.character.CharacterRemote
+import com.example.rickandmorty_arturo.data.source.local.LocalCharactersDataSource
 import com.example.rickandmorty_arturo.data.source.local.database.CharactersDao
-import com.example.rickandmorty_arturo.domain.data_sources.LocalCharactersDataSource
 import javax.inject.Inject
 
 class LocalCharactersDataSourceImpl @Inject constructor(

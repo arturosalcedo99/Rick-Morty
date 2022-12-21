@@ -3,10 +3,10 @@ package com.example.rickandmorty_arturo.data.repositories.impl
 import com.example.rickandmorty_arturo.data.mappers.toCharacterLocal
 import com.example.rickandmorty_arturo.data.models.CharacterResult
 import com.example.rickandmorty_arturo.data.models.character.CharacterRemote
-import com.example.rickandmorty_arturo.domain.repositories.CharactersRepository
+import com.example.rickandmorty_arturo.data.repositories.CharactersRepository
 import com.example.rickandmorty_arturo.data.source.remote.api.ApiError
-import com.example.rickandmorty_arturo.domain.data_sources.LocalCharactersDataSource
-import com.example.rickandmorty_arturo.domain.data_sources.RemoteCharactersDataSource
+import com.example.rickandmorty_arturo.data.source.local.LocalCharactersDataSource
+import com.example.rickandmorty_arturo.data.source.remote.RemoteCharactersDataSource
 import com.example.rickandmorty_arturo.helpers.Utils
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

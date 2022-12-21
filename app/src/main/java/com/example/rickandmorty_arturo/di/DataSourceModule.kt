@@ -1,11 +1,11 @@
 package com.example.rickandmorty_arturo.di
 
-import com.example.rickandmorty_arturo.data.source.local.LocalCharactersDataSourceImpl
+import com.example.rickandmorty_arturo.data.source.local.impl.LocalCharactersDataSourceImpl
 import com.example.rickandmorty_arturo.data.source.local.database.CharactersDatabase
-import com.example.rickandmorty_arturo.data.source.remote.RemoteCharactersDataSourceImpl
+import com.example.rickandmorty_arturo.data.source.remote.impl.RemoteCharactersDataSourceImpl
 import com.example.rickandmorty_arturo.data.source.remote.api.CharactersApi
-import com.example.rickandmorty_arturo.domain.data_sources.LocalCharactersDataSource
-import com.example.rickandmorty_arturo.domain.data_sources.RemoteCharactersDataSource
+import com.example.rickandmorty_arturo.data.source.local.LocalCharactersDataSource
+import com.example.rickandmorty_arturo.data.source.remote.RemoteCharactersDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
