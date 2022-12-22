@@ -6,4 +6,18 @@
     <string name="name_title">Name:</string>
     <string name="gender_title">Gender:</string>
     <string name="status_title">Status:</string>
+
+    <!-- DIALOGS -->
+    <string name="accept">Aceptar</string>
+
+    <!-- ERRORS -->
+    <string name="error_title">Error</string>
+    <string name="network_error">Se ha producido un error de conexión.</string>
+    <string name="not_found_error">No se ha obtenido ningún resultado.</string>
+    <string name="bad_request_error">Revise los datos introducidos.</string>
+    <string name="timeout_error">El servidor ha tardado demasiado en responder.</string>
+    <string name="server_error">Se ha producido un error en el servidor.</string>
+    <string name="unauthorized_error">No tiene permisos para realizar esta consulta.</string>
+    <string name="unavailable_error">Este servicio no se encuentra disponible actualmente.</string>
+    <string name="unknown_error">Se ha producido un error al realizar su consulta.</string>
 </resources>

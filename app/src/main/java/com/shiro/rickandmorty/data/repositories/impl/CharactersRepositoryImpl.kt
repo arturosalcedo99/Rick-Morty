@@ -9,8 +9,11 @@ import com.shiro.rickandmorty.domain.models.Character
 import com.shiro.rickandmorty.domain.models.CharacterResult
 import com.shiro.rickandmorty.domain.repositories.CharactersRepository
 import com.shiro.rickandmorty.helpers.Utils
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class CharactersRepositoryImpl @Inject constructor(
@@ -21,13 +24,15 @@ class CharactersRepositoryImpl @Inject constructor(
         return flow {
             try {
                 val result = remoteCharactersDataSource.getAllCharacters(page)
-                result?.results?.forEach {
-                    localCharactersDataSource.saveCharacter(it.toCharacterLocal())
+                CoroutineScope(Dispatchers.IO).launch {
+                    result?.results?.forEach {
+                        localCharactersDataSource.saveCharacter(it.toCharacterLocal())
+                    }
                 }
                 emit(
                     result?.let {
                         Result.success(it.toDomain())
-                    } ?: Result.failure(ApiError.NotFound(null))
+                    } ?: Result.failure(ApiError.NotFound())
                 )
             } catch (e: Exception) {
                 val error = Utils.getError(e)
@@ -55,7 +60,7 @@ class CharactersRepositoryImpl @Inject constructor(
                 emit(
                     result?.let {
                         Result.success(it.toDomain())
-                    } ?: Result.failure(ApiError.NotFound(null))
+                    } ?: Result.failure(ApiError.NotFound())
                 )
             } catch (e: Exception) {
                 val error = Utils.getError(e)
@@ -76,7 +81,7 @@ class CharactersRepositoryImpl @Inject constructor(
                 emit(
                     result?.let {
                         Result.success(it.toDomain())
-                    } ?: Result.failure(ApiError.NotFound(null))
+                    } ?: Result.failure(ApiError.NotFound())
                 )
             } catch (e: Exception) {
                 val error = Utils.getError(e)

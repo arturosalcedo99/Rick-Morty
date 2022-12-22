@@ -38,4 +38,5 @@ object Constants {
     const val DIALOG_KEY_ACCEPT = "accept"
     const val DIALOG_KEY_CANCEL = "cancel"
     const val DIALOG_KEY_NON_CANCELABLE = "non_cancelable"
+    const val DIALOG_KEY_DISMISS_CLICK = "disable_dismiss"
 }

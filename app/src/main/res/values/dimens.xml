@@ -22,4 +22,7 @@
     <!-- IMAGE SIZES -->
     <dimen name="user_pic_size">125dp</dimen>
     <dimen name="icon_size">24dp</dimen>
+
+    <!-- PROGRESS BAR -->
+    <dimen name="progress_bar_size">70dp</dimen>
 </resources>
