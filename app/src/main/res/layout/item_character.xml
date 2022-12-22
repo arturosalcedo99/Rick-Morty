@@ -13,7 +13,7 @@
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="225dp"
         android:layout_marginHorizontal="@dimen/margin_small"
         android:layout_marginTop="@dimen/margin_regular"
         app:cardBackgroundColor="@color/card_grey"
@@ -37,13 +37,25 @@
 
             <TextView
                 android:id="@+id/text_name"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_small"
-                android:paddingHorizontal="@dimen/padding_medium_small"
+                android:layout_marginTop="@dimen/margin_medium_small"
+                android:paddingStart="@dimen/padding_medium_small"
+                android:paddingEnd="@dimen/padding_small"
+                android:text="@string/name_title"
                 android:textColor="@color/black"
-                app:layout_constraintTop_toBottomOf="@id/image_user"
-                tools:text="Name: Name Surname" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/image_user" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:text="@{character.name}"
+                app:layout_constraintBottom_toBottomOf="@id/text_name"
+                app:layout_constraintStart_toEndOf="@id/text_name"
+                app:layout_constraintTop_toTopOf="@id/text_name"
+                tools:text="Paco" />
 
             <TextView
                 android:id="@+id/text_gender"
@@ -51,10 +63,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_small"
                 android:paddingStart="@dimen/padding_medium_small"
+                android:text="@string/gender_title"
                 android:textColor="@color/black"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_name"
-                android:text="@string/gender_title" />
+                app:layout_constraintTop_toBottomOf="@id/text_name" />
 
             <ImageView
                 android:id="@+id/image_gender"
@@ -65,7 +77,29 @@
                 app:layout_constraintBottom_toBottomOf="@id/text_gender"
                 app:layout_constraintStart_toEndOf="@id/text_gender"
                 app:layout_constraintTop_toTopOf="@id/text_gender"
-                tools:src="@drawable/ic_gender_undefined"/>
+                tools:src="@drawable/ic_gender_undefined" />
+
+            <TextView
+                android:id="@+id/text_status_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_small"
+                android:paddingStart="@dimen/padding_medium_small"
+                android:paddingEnd="@dimen/padding_small"
+                android:text="@string/status_title"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_gender" />
+
+            <TextView
+                android:id="@+id/text_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/text_status_title"
+                app:layout_constraintBottom_toBottomOf="@id/text_status_title"
+                app:layout_constraintStart_toEndOf="@id/text_status_title"
+                tools:text="Alive"
+                tools:textColor="@color/green"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

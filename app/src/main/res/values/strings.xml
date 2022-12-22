@@ -3,5 +3,7 @@
     <string name="app_name_formatted">Rick &amp; Morty Characters</string>
     <string name="simple_dialog_title">Title</string>
     <string name="simple_dialog_text">Text</string>
+    <string name="name_title">Name:</string>
     <string name="gender_title">Gender:</string>
+    <string name="status_title">Status:</string>
 </resources>
