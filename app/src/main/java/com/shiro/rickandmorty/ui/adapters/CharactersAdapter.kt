@@ -17,7 +17,7 @@ import com.shiro.rickandmorty.domain.models.Character
 
 class CharactersAdapter(
     private val context: Context,
-    private val clickListener: () -> Unit
+    private val clickListener: (character: Character) -> Unit
 ) : ListAdapter<Character,
         CharactersAdapter.CharacterViewHolder>(CharactersDiffCallback()) {
 
@@ -36,10 +36,10 @@ class CharactersAdapter(
         fun bind(
             context: Context,
             item: Character,
-            clickListener: () -> Unit
+            clickListener: (character: Character) -> Unit
         ) {
             binding.character = item
-            binding.root.setOnClickListener { clickListener() }
+            binding.root.setOnClickListener { clickListener(item) }
             Glide.with(context)
                 .load(item.image)
                 .error(ContextCompat.getDrawable(context, R.drawable.logo))

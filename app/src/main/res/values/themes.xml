@@ -12,6 +12,7 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/dark_grey</item>
         <!-- Customize your theme here. -->
+        <item name="autoCompleteTextViewStyle">@style/custom_cursor_autocomplete_view</item>
     </style>
 
     <!-- TEXT STYLES -->
@@ -27,6 +28,17 @@
     <style name="standard_toolbar" parent="Widget.MaterialComponents.Toolbar">
         <item name="android:background">@color/grey</item>
         <item name="titleTextColor">@color/yellow_title</item>
+    </style>
+
+    <!-- SEARCH VIEW STYLES -->
+    <style name="custom_cursor_autocomplete_view" parent="Widget.AppCompat.AutoCompleteTextView">
+        <item name="android:textCursorDrawable">@drawable/custom_cursor</item>
+    </style>
+
+    <!-- BUTTON STYLES -->
+    <style name="no_inset">
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
     </style>
 
 </resources>

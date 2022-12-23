@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="character"
+            type="com.shiro.rickandmorty.domain.models.Character" />
+
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_regular"
+        app:cardBackgroundColor="@color/card_grey"
+        app:cardCornerRadius="@dimen/corner_radius_regular"
+        app:cardElevation="@dimen/elevation_regular">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dialog_character_height">
+
+            <ImageView
+                android:id="@+id/image_user"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/user_pic_size"
+                android:contentDescription="@null"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/text_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_medium_small"
+                android:paddingStart="@dimen/padding_medium_small"
+                android:paddingEnd="@dimen/padding_small"
+                android:text="@string/name_title"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/image_user" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_medium_small"
+                android:ellipsize="end"
+                android:lines="1"
+                android:maxLines="1"
+                android:text="@{character.name}"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="@id/text_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toEndOf="@id/text_name"
+                app:layout_constraintTop_toTopOf="@id/text_name"
+                tools:text="Paco" />
+
+            <TextView
+                android:id="@+id/text_gender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_small"
+                android:paddingStart="@dimen/padding_medium_small"
+                android:text="@string/gender_title"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_name" />
+
+            <ImageView
+                android:id="@+id/image_gender"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/margin_mini"
+                android:contentDescription="@null"
+                app:layout_constraintBottom_toBottomOf="@id/text_gender"
+                app:layout_constraintStart_toEndOf="@id/text_gender"
+                app:layout_constraintTop_toTopOf="@id/text_gender"
+                tools:src="@drawable/ic_gender_undefined" />
+
+            <TextView
+                android:id="@+id/text_status_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_small"
+                android:paddingStart="@dimen/padding_medium_small"
+                android:paddingEnd="@dimen/padding_small"
+                android:text="@string/status_title"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_gender" />
+
+            <TextView
+                android:id="@+id/text_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{character.status}"
+                app:layout_constraintBottom_toBottomOf="@id/text_status_title"
+                app:layout_constraintStart_toEndOf="@id/text_status_title"
+                app:layout_constraintTop_toTopOf="@id/text_status_title"
+                tools:text="Alive"
+                tools:textColor="@color/green" />
+
+            <TextView
+                android:id="@+id/text_species_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_small"
+                android:paddingStart="@dimen/padding_medium_small"
+                android:paddingEnd="@dimen/padding_small"
+                android:text="@string/species_title"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_status_title" />
+
+            <TextView
+                android:id="@+id/text_species"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:lines="1"
+                android:maxLines="1"
+                android:text="@{character.species}"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="@id/text_species_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/text_species_title"
+                app:layout_constraintTop_toTopOf="@id/text_species_title"
+                tools:text="Human" />
+
+            <TextView
+                android:id="@+id/text_origin_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_small"
+                android:paddingStart="@dimen/padding_medium_small"
+                android:paddingEnd="@dimen/padding_small"
+                android:text="@string/origin_title"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_species_title" />
+
+            <TextView
+                android:id="@+id/text_origin"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_medium_small"
+                android:ellipsize="end"
+                android:lines="1"
+                android:maxLines="1"
+                android:text="@{character.origin}"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="@id/text_origin_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/text_origin_title"
+                app:layout_constraintTop_toTopOf="@id/text_origin_title"
+                tools:text="Earth (C-137)" />
+
+            <TextView
+                android:id="@+id/text_location_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_small"
+                android:paddingStart="@dimen/padding_medium_small"
+                android:paddingEnd="@dimen/padding_small"
+                android:text="@string/location_title"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_origin_title" />
+
+            <TextView
+                android:id="@+id/text_location"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_medium_small"
+                android:ellipsize="end"
+                android:lines="1"
+                android:maxLines="1"
+                android:text="@{character.location}"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="@id/text_location_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/text_location_title"
+                app:layout_constraintTop_toTopOf="@id/text_location_title"
+                tools:text="Citadel of Ricks" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_close"
+                style="@style/no_inset"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_medium_small"
+                android:text="@string/close"
+                app:backgroundTint="@color/grey"
+                app:cornerRadius="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_location_title" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</layout>

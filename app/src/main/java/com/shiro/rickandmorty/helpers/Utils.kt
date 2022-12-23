@@ -1,5 +1,6 @@
 package com.shiro.rickandmorty.helpers
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.os.Build
@@ -8,18 +9,25 @@ import android.text.Html
 import android.text.SpannableString
 import android.text.Spanned
 import android.view.*
-import android.widget.LinearLayout
-import android.widget.TableLayout
+import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import com.bumptech.glide.GenericTransitionOptions
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.shiro.rickandmorty.R
 import com.shiro.rickandmorty.data.source.remote.api.ApiError
+import com.shiro.rickandmorty.databinding.DialogCharacterBinding
 import com.shiro.rickandmorty.databinding.DialogSimpleLayoutBinding
+import com.shiro.rickandmorty.domain.models.Character
 import retrofit2.HttpException
 import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.UnknownHostException
 
 object Utils {
+
     inline fun <reified T : Any> Any.cast(): T {
         return this as T
     }
@@ -115,6 +123,42 @@ object Utils {
         return dialog
     }
 
+    fun showCharacterDialog(
+        context: Context,
+        item: Character
+    ): Dialog {
+        val dialog = Dialog(context)
+        val dialogBinding: DialogCharacterBinding =
+            DataBindingUtil.inflate(
+                LayoutInflater.from(context),
+                R.layout.dialog_character,
+                null,
+                false
+            )
+
+        dialogBinding.character = item
+        dialogBinding.buttonClose.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        Glide.with(context)
+            .load(item.image)
+            .error(ContextCompat.getDrawable(context, R.drawable.logo))
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .transition(GenericTransitionOptions.with(com.bumptech.glide.R.anim.abc_fade_in))
+            .into(dialogBinding.imageUser)
+
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(dialogBinding.root)
+        dialog.window?.setGravity(Gravity.CENTER)
+        dialog.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+
+        return dialog
+    }
+
     fun fromHtml(html: String?): Spanned? {
         return when {
             html == null -> SpannableString("")
@@ -122,6 +166,13 @@ object Utils {
                 Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY)
             }
             else -> Html.fromHtml(html)
+        }
+    }
+
+    fun Activity.hideKeyboard(view: View?) {
+        view?.let {
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(it.windowToken, 0)
         }
     }
 

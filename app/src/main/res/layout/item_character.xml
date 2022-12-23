@@ -13,7 +13,7 @@
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="225dp"
+        android:layout_height="@dimen/item_character_height"
         android:layout_marginHorizontal="@dimen/margin_small"
         android:layout_marginBottom="@dimen/margin_regular"
         app:cardBackgroundColor="@color/card_grey"
@@ -53,9 +53,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/margin_medium_small"
                 android:ellipsize="end"
-                android:text="@{character.name}"
                 android:lines="1"
                 android:maxLines="1"
+                android:text="@{character.name}"
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="@id/text_name"
                 app:layout_constraintEnd_toEndOf="parent"

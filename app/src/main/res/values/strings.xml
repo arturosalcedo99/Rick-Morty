@@ -6,18 +6,25 @@
     <string name="name_title">Name:</string>
     <string name="gender_title">Gender:</string>
     <string name="status_title">Status:</string>
+    <string name="species_title">Species:</string>
+    <string name="origin_title">Origin:</string>
+    <string name="location_title">Location:</string>
 
     <!-- DIALOGS -->
-    <string name="accept">Aceptar</string>
+    <string name="accept">Accept</string>
+    <string name="close">Close</string>
+
+    <!-- SEARCH VIEW -->
+    <string name="query_hint">Enter a character\'s name</string>
 
     <!-- ERRORS -->
     <string name="error_title">Error</string>
-    <string name="network_error">Se ha producido un error de conexión.</string>
-    <string name="not_found_error">No se ha obtenido ningún resultado.</string>
-    <string name="bad_request_error">Revise los datos introducidos.</string>
-    <string name="timeout_error">El servidor ha tardado demasiado en responder.</string>
-    <string name="server_error">Se ha producido un error en el servidor.</string>
-    <string name="unauthorized_error">No tiene permisos para realizar esta consulta.</string>
-    <string name="unavailable_error">Este servicio no se encuentra disponible actualmente.</string>
-    <string name="unknown_error">Se ha producido un error al realizar su consulta.</string>
+    <string name="network_error">A connection error has occurred.</string>
+    <string name="not_found_error">No result was found.</string>
+    <string name="bad_request_error">Check the entered data.</string>
+    <string name="timeout_error">Server\'s response has been too slow.</string>
+    <string name="server_error">An internal server error has occurred.</string>
+    <string name="unauthorized_error">You don\'t have the needed permissions to make this request.</string>
+    <string name="unavailable_error">This service is temporarily unavailable.</string>
+    <string name="unknown_error">An error has occurred when making your request.</string>
 </resources>

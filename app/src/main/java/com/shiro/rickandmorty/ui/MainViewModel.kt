@@ -3,12 +3,15 @@ package com.shiro.rickandmorty.ui
 import android.os.Bundle
 import androidx.lifecycle.viewModelScope
 import com.shiro.rickandmorty.R
-import com.shiro.rickandmorty.data.source.local.preferences.AppPreferences
 import com.shiro.rickandmorty.data.source.remote.api.ApiError
 import com.shiro.rickandmorty.domain.models.Character
+import com.shiro.rickandmorty.domain.models.Pager
 import com.shiro.rickandmorty.domain.use_cases.GetAllCharactersUseCase
+import com.shiro.rickandmorty.domain.use_cases.GetCharactersBySearchUseCase
+import com.shiro.rickandmorty.helpers.Utils
 import com.shiro.rickandmorty.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -28,7 +31,8 @@ data class MainUiState(
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val getAllCharactersUseCase: GetAllCharactersUseCase
+    private val getAllCharactersUseCase: GetAllCharactersUseCase,
+    private val getCharactersBySearchUseCase: GetCharactersBySearchUseCase
 ) : BaseViewModel() {
 
     val mainUiState by lazy {
@@ -43,33 +47,38 @@ class MainViewModel @Inject constructor(
         resetPage()
         increasePage()
         setClearList(true)
-        getCharacters()
-        setClearList(false)
+        if (isSearch()) getCharactersBySearch()
+        else getCharacters()
     }
 
     fun hasNext(): Boolean = mainUiState.value.hasNext
     fun isLoading(): Boolean = mainUiState.value.isLoading
+    fun isSearch(): Boolean = mainUiState.value.searchQuery.isNotEmpty()
+
+    fun setSearchQuery(query: String, submit: Boolean = false) {
+        mainUiState.update {
+            it.copy(searchQuery = query)
+        }
+        if (submit) {
+            refreshData()
+        }
+    }
+
+    fun resetQuery() {
+        mainUiState.update {
+            it.copy(searchQuery = "")
+        }
+    }
 
     fun getCharacters() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             setIsLoading(true)
             getAllCharactersUseCase(mainUiState.value.page)
+                .distinctUntilChanged()
                 .collect { result ->
                     result.onSuccess { characterResult ->
-                        val auxCharactersList =
-                            if (mainUiState.value.clearList) mutableListOf()
-                            else mainUiState.value.characters as MutableList
-                        characterResult?.results?.let {
-                            auxCharactersList.addAll(characterResult.results)
-                            setCharacters(auxCharactersList)
-                        }
-                        characterResult?.info?.let { pager ->
-                            if (pager.next == null) {
-                                resetPage()
-                                setHasNext(false)
-                            }
-                            else increasePage()
-                        }
+                        characterResult?.results?.let { setCharacters(it) }
+                        characterResult?.info?.let { setPage(it) }
                     }
                     result.onFailure {
                         val error = it as? ApiError
@@ -78,7 +87,32 @@ class MainViewModel @Inject constructor(
                         )
                     }
                     setIsLoading(false)
+                    setClearList(false)
                 }
+        }
+    }
+
+    fun getCharactersBySearch() {
+        viewModelScope.launch(Dispatchers.IO) {
+            setIsLoading(true)
+            with(mainUiState.value) {
+                getCharactersBySearchUseCase(searchQuery, page)
+                    .distinctUntilChanged()
+                    .collect { result ->
+                        result.onSuccess { characterResult ->
+                            characterResult?.results?.let { setCharacters(it) }
+                            characterResult?.info?.let { setPage(it) }
+                        }
+                        result.onFailure {
+                            val error = it as? ApiError
+                            setErrorMessage(
+                                error?.errorMessage ?: R.string.unknown_error
+                            )
+                        }
+                        setIsLoading(false)
+                        setClearList(false)
+                    }
+            }
         }
     }
 
@@ -95,8 +129,12 @@ class MainViewModel @Inject constructor(
     }
 
     private fun setCharacters(characters: List<Character>) {
+        val auxCharactersList =
+            if (mainUiState.value.clearList) mutableListOf()
+            else mainUiState.value.characters as MutableList
+        auxCharactersList.addAll(characters)
         mainUiState.update {
-            it.copy(characters = characters)
+            it.copy(characters = auxCharactersList)
         }
     }
 
@@ -110,6 +148,14 @@ class MainViewModel @Inject constructor(
         mainUiState.update {
             it.copy(page = 0)
         }
+    }
+
+    private fun setPage(pager: Pager) {
+        if (pager.next == null) {
+            resetPage()
+            setHasNext(false)
+        }
+        else increasePage()
     }
 
     private fun setClearList(clearList: Boolean) {

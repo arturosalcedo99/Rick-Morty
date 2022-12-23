@@ -1,6 +1,8 @@
 package com.shiro.rickandmorty.ui
 
 import android.os.Bundle
+import android.view.View
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -10,11 +12,10 @@ import com.shiro.rickandmorty.R
 import com.shiro.rickandmorty.databinding.ActivityMainBinding
 import com.shiro.rickandmorty.helpers.Constants
 import com.shiro.rickandmorty.helpers.Utils
+import com.shiro.rickandmorty.helpers.Utils.hideKeyboard
 import com.shiro.rickandmorty.ui.adapters.CharactersAdapter
 import com.shiro.rickandmorty.ui.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
@@ -33,7 +34,9 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
     private fun initAdapter() {
         charactersAdapter =
-            CharactersAdapter(this) {  }
+            CharactersAdapter(this) { character ->
+                Utils.showCharacterDialog(this, character)
+            }
         binding.recyclerCharacters.adapter = charactersAdapter
     }
 
@@ -44,18 +47,48 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
                 viewModel.refreshData()
             }
         }
+
         binding.recyclerCharacters.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 val layoutManager = binding.recyclerCharacters.layoutManager as? GridLayoutManager
                 layoutManager?.let {
                     if (it.findLastCompletelyVisibleItemPosition() >= charactersAdapter.itemCount - 4
                         && viewModel.hasNext() && !viewModel.isLoading()) {
-                        viewModel.getCharacters()
+                        if (viewModel.isSearch()) viewModel.getCharactersBySearch()
+                        else viewModel.getCharacters()
                     }
                 }
                 super.onScrolled(recyclerView, dx, dy)
             }
         })
+
+        binding.searchView.apply {
+
+            findViewById<View>(
+                androidx.appcompat.R.id.search_close_btn
+            ).setOnClickListener {
+                setQuery("", false)
+                viewModel.resetQuery()
+                viewModel.refreshData()
+                hideKeyboard(binding.root)
+            }
+
+            setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    query?.let {
+                        viewModel.setSearchQuery(it, true)
+                    }
+                    return false
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    newText?.let {
+                        viewModel.setSearchQuery(it)
+                    }
+                    return false
+                }
+            })
+        }
     }
 
     private fun initObservers() {
@@ -96,6 +129,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
                     .map { it.characters }
                     .collect {
                         charactersAdapter.submitList(it.toMutableList())
+                        binding.recyclerCharacters.scrollTo(0, 0)
                     }
             }
         }
