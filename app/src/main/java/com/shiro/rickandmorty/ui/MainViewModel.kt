@@ -21,7 +21,9 @@ data class MainUiState(
     var searchQuery: String = "",
     val isLoading: Boolean = false,
     val errorMessage: Int = 0,
-    val characters: List<Character> = mutableListOf()
+    val characters: List<Character> = mutableListOf(),
+    val clearList: Boolean = false,
+    val hasNext: Boolean = true
 )
 
 @HiltViewModel
@@ -37,42 +39,88 @@ class MainViewModel @Inject constructor(
         getCharacters()
     }
 
-    private fun getCharacters() {
+    fun refreshData() {
+        resetPage()
+        increasePage()
+        setClearList(true)
+        getCharacters()
+        setClearList(false)
+    }
+
+    fun hasNext(): Boolean = mainUiState.value.hasNext
+    fun isLoading(): Boolean = mainUiState.value.isLoading
+
+    fun getCharacters() {
         viewModelScope.launch {
-            mainUiState.value = mainUiState.value.copy(
-                isLoading = true
-            )
+            setIsLoading(true)
             getAllCharactersUseCase(mainUiState.value.page)
                 .collect { result ->
                     result.onSuccess { characterResult ->
-                        val auxCharactersList = mainUiState.value.characters as MutableList
-                        val currentPage = mainUiState.value.page
+                        val auxCharactersList =
+                            if (mainUiState.value.clearList) mutableListOf()
+                            else mainUiState.value.characters as MutableList
                         characterResult?.results?.let {
                             auxCharactersList.addAll(characterResult.results)
-                            /*mainUiState.update {
-                                it.copy(
-                                    page = currentPage + 1,
-                                    characters = auxCharactersList
-                                )
-                            }*/
+                            setCharacters(auxCharactersList)
                         }
-                        characterResult?.info?.let {
-                            if (it.next == null)
-                                mainUiState.value = mainUiState.value.copy(
-                                    page = 0
-                                )
+                        characterResult?.info?.let { pager ->
+                            if (pager.next == null) {
+                                resetPage()
+                                setHasNext(false)
+                            }
+                            else increasePage()
                         }
                     }
                     result.onFailure {
                         val error = it as? ApiError
-                        mainUiState.value = mainUiState.value.copy(
-                            errorMessage = error?.errorMessage ?: R.string.unknown_error
+                        setErrorMessage(
+                            error?.errorMessage ?: R.string.unknown_error
                         )
                     }
-                    mainUiState.value = mainUiState.value.copy(
-                        isLoading = false
-                    )
+                    setIsLoading(false)
                 }
+        }
+    }
+
+    private fun setIsLoading(isLoading: Boolean) {
+        mainUiState.update {
+            it.copy(isLoading = isLoading)
+        }
+    }
+
+    private fun setErrorMessage(errorMessage: Int) {
+        mainUiState.update {
+            it.copy(errorMessage = errorMessage)
+        }
+    }
+
+    private fun setCharacters(characters: List<Character>) {
+        mainUiState.update {
+            it.copy(characters = characters)
+        }
+    }
+
+    private fun increasePage() {
+        mainUiState.update {
+            it.copy(page = it.page + 1)
+        }
+    }
+
+    private fun resetPage() {
+        mainUiState.update {
+            it.copy(page = 0)
+        }
+    }
+
+    private fun setClearList(clearList: Boolean) {
+        mainUiState.update {
+            it.copy(clearList = clearList)
+        }
+    }
+
+    private fun setHasNext(hasNext: Boolean) {
+        mainUiState.update {
+            it.copy(hasNext = hasNext)
         }
     }
 }

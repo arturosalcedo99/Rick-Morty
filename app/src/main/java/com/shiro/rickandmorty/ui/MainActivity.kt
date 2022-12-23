@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.shiro.rickandmorty.R
 import com.shiro.rickandmorty.databinding.ActivityMainBinding
 import com.shiro.rickandmorty.helpers.Constants
@@ -25,6 +27,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
     override fun setUpViews() {
         initAdapter()
+        initListeners()
         initObservers()
     }
 
@@ -32,6 +35,27 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         charactersAdapter =
             CharactersAdapter(this) {  }
         binding.recyclerCharacters.adapter = charactersAdapter
+    }
+
+    private fun initListeners() {
+        binding.refreshLayout.apply {
+            setOnRefreshListener {
+                isRefreshing = false
+                viewModel.refreshData()
+            }
+        }
+        binding.recyclerCharacters.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                val layoutManager = binding.recyclerCharacters.layoutManager as? GridLayoutManager
+                layoutManager?.let {
+                    if (it.findLastCompletelyVisibleItemPosition() >= charactersAdapter.itemCount - 4
+                        && viewModel.hasNext() && !viewModel.isLoading()) {
+                        viewModel.getCharacters()
+                    }
+                }
+                super.onScrolled(recyclerView, dx, dy)
+            }
+        })
     }
 
     private fun initObservers() {
