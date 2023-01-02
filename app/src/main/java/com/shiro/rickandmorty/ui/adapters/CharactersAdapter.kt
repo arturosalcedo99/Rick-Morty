@@ -1,7 +1,6 @@
 package com.shiro.rickandmorty.ui.adapters
 
 import android.content.Context
-import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -39,7 +38,8 @@ class CharactersAdapter(
             clickListener: (character: Character) -> Unit
         ) {
             binding.character = item
-            binding.root.setOnClickListener { clickListener(item) }
+            binding.layoutItem.setOnClickListener { clickListener(item) }
+
             Glide.with(context)
                 .load(item.image)
                 .error(ContextCompat.getDrawable(context, R.drawable.logo))

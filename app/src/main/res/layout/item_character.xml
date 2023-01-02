@@ -21,10 +21,10 @@
         app:cardElevation="@dimen/elevation_regular">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_item"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="?attr/selectableItemBackground"
-            tools:context=".ui.main.MainActivity">
+            android:background="?attr/selectableItemBackground">
 
             <ImageView
                 android:id="@+id/image_user"

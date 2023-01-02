@@ -11,26 +11,30 @@
 
     </data>
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_regular"
         app:cardBackgroundColor="@color/card_grey"
         app:cardCornerRadius="@dimen/corner_radius_regular"
-        app:cardElevation="@dimen/elevation_regular">
+        app:cardElevation="0dp"
+        app:strokeColor="@color/dark_grey"
+        app:strokeWidth="2dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dialog_character_height">
+            android:layout_height="wrap_content">
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/image_user"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/user_pic_size"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dialog_character_photo_size"
+                android:layout_marginTop="@dimen/margin_regular"
                 android:contentDescription="@null"
-                android:scaleType="centerCrop"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.RoundedCorners"
                 tools:src="@tools:sample/avatars" />
 
             <TextView
@@ -203,6 +207,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
 </layout>

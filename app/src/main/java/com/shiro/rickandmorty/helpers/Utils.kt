@@ -148,13 +148,44 @@ object Utils {
             .transition(GenericTransitionOptions.with(com.bumptech.glide.R.anim.abc_fade_in))
             .into(dialogBinding.imageUser)
 
+        with(item) {
+            dialogBinding.textStatus.setTextColor(
+                ContextCompat.getColor(
+                    context,
+                    if (status?.equals("Alive", true) == true)
+                        R.color.green
+                    else if (status?.equals("Dead", true) == true)
+                        R.color.red
+                    else R.color.black
+                )
+            )
+
+            Glide.with(context)
+                .load(
+                    ContextCompat.getDrawable(
+                        context,
+                        if (gender?.equals("Male", true) == true)
+                            R.drawable.ic_gender_male
+                        else if (gender?.equals("Female", true) == true)
+                            R.drawable.ic_gender_female
+                        else R.drawable.ic_gender_undefined
+                    )
+                )
+                .error(ContextCompat.getDrawable(context, R.drawable.ic_gender_undefined))
+                .into(dialogBinding.imageGender)
+        }
+
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(dialogBinding.root)
-        dialog.window?.setGravity(Gravity.CENTER)
-        dialog.window?.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
+        dialog.window?.let {
+            it.setBackgroundDrawableResource(R.drawable.custom_dialog_background)
+            it.setGravity(Gravity.CENTER)
+            it.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+        }
+        dialog.show()
 
         return dialog
     }

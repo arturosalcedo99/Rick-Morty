@@ -41,4 +41,9 @@
         <item name="android:insetBottom">0dp</item>
     </style>
 
+    <!-- IMAGE STYLES -->
+    <style name="ShapeAppearanceOverlay.App.RoundedCorners" parent="">
+        <item name="cornerSize">50%</item>
+    </style>
+
 </resources>
