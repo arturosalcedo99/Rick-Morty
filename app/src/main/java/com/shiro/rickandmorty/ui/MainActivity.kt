@@ -83,7 +83,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
                 override fun onQueryTextChange(newText: String?): Boolean {
                     newText?.let {
-                        viewModel.setSearchQuery(it)
+                        viewModel.setSearchQuery(it, false)
                     }
                     return false
                 }
@@ -116,7 +116,14 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
                             bundle.putString(Constants.DIALOG_KEY_ACCEPT, getString(R.string.accept))
                             Utils.showDoubleDialog(
                                 this@MainActivity,
-                                bundle
+                                bundle,
+                                object : Utils.DialogClickListeners {
+                                    override fun positive() {
+                                        super.positive()
+                                        viewModel.resetErrorMessage()
+                                        viewModel.resetQuery()
+                                    }
+                                }
                             )
                         }
                     }

@@ -70,6 +70,10 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    fun resetErrorMessage() {
+        setErrorMessage(0)
+    }
+
     fun getCharacters() {
         viewModelScope.launch(Dispatchers.IO) {
             setIsLoading(true)
@@ -100,8 +104,12 @@ class MainViewModel @Inject constructor(
                     .distinctUntilChanged()
                     .collect { result ->
                         result.onSuccess { characterResult ->
+                            characterResult?.info?.let {
+                                setPage(it)
+                                if (!it.prev.isNullOrEmpty())
+                                    setClearList(false)
+                            }
                             characterResult?.results?.let { setCharacters(it) }
-                            characterResult?.info?.let { setPage(it) }
                         }
                         result.onFailure {
                             val error = it as? ApiError
