@@ -207,6 +207,16 @@ object Utils {
         }
     }
 
+    fun capitalize(string: String): String {
+        val stringSplit = string.split(" ")
+        return if (stringSplit.size <= 1)
+            string.replaceFirstChar { it.uppercase() }
+        else
+            stringSplit.onEach {
+                it.uppercase()
+            }.joinToString(" ")
+    }
+
     interface DialogClickListeners {
         fun positive() {}
         fun negative() {}

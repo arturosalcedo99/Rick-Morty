@@ -9,6 +9,8 @@
             name="character"
             type="com.shiro.rickandmorty.domain.models.Character" />
 
+        <import type="com.shiro.rickandmorty.helpers.Utils" />
+
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -55,7 +57,7 @@
                 android:ellipsize="end"
                 android:lines="1"
                 android:maxLines="1"
-                android:text="@{character.name}"
+                android:text="@{Utils.INSTANCE.capitalize(character.name)}"
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="@id/text_name"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -102,7 +104,7 @@
                 android:id="@+id/text_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{character.status}"
+                android:text="@{Utils.INSTANCE.capitalize(character.status)}"
                 app:layout_constraintBottom_toBottomOf="@id/text_status_title"
                 app:layout_constraintStart_toEndOf="@id/text_status_title"
                 app:layout_constraintTop_toTopOf="@id/text_status_title"

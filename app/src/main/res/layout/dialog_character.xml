@@ -9,6 +9,8 @@
             name="character"
             type="com.shiro.rickandmorty.domain.models.Character" />
 
+        <import type="com.shiro.rickandmorty.helpers.Utils" />
+
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -17,9 +19,7 @@
         android:layout_margin="@dimen/margin_regular"
         app:cardBackgroundColor="@color/card_grey"
         app:cardCornerRadius="@dimen/corner_radius_regular"
-        app:cardElevation="0dp"
-        app:strokeColor="@color/dark_grey"
-        app:strokeWidth="2dp">
+        app:cardElevation="@dimen/elevation_regular">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -56,7 +56,7 @@
                 android:ellipsize="end"
                 android:lines="1"
                 android:maxLines="1"
-                android:text="@{character.name}"
+                android:text="@{Utils.INSTANCE.capitalize(character.name)}"
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="@id/text_name"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -103,7 +103,7 @@
                 android:id="@+id/text_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{character.status}"
+                android:text="@{Utils.INSTANCE.capitalize(character.status)}"
                 app:layout_constraintBottom_toBottomOf="@id/text_status_title"
                 app:layout_constraintStart_toEndOf="@id/text_status_title"
                 app:layout_constraintTop_toTopOf="@id/text_status_title"
@@ -129,7 +129,7 @@
                 android:ellipsize="end"
                 android:lines="1"
                 android:maxLines="1"
-                android:text="@{character.species}"
+                android:text="@{Utils.INSTANCE.capitalize(character.species)}"
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="@id/text_species_title"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -157,7 +157,7 @@
                 android:ellipsize="end"
                 android:lines="1"
                 android:maxLines="1"
-                android:text="@{character.origin}"
+                android:text="@{Utils.INSTANCE.capitalize(character.origin)}"
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="@id/text_origin_title"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -185,7 +185,7 @@
                 android:ellipsize="end"
                 android:lines="1"
                 android:maxLines="1"
-                android:text="@{character.location}"
+                android:text="@{Utils.INSTANCE.capitalize(character.location)}"
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="@id/text_location_title"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -200,7 +200,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_medium_small"
                 android:text="@string/close"
-                app:backgroundTint="@color/grey"
+                app:backgroundTint="@color/dark_grey"
                 app:cornerRadius="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/text_location_title" />
