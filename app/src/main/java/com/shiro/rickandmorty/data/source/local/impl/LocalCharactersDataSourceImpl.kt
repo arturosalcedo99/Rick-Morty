@@ -11,15 +11,15 @@ import javax.inject.Inject
 class LocalCharactersDataSourceImpl @Inject constructor(
     private val charactersDao: CharactersDao
 ): LocalCharactersDataSource {
-    override suspend fun getAllCharacters(): List<CharacterLocal>? {
+    override suspend fun getAllCharacters(): List<CharacterLocal> {
         return charactersDao.getAllCharacters()
     }
 
-    override suspend fun getCharacterDetails(characterId: Int): CharacterLocal? {
+    override suspend fun getCharacterDetails(characterId: Int): CharacterLocal {
         return charactersDao.getCharacterDetails(characterId)
     }
 
-    override suspend fun searchCharacters(name: String): List<CharacterLocal>? {
+    override suspend fun searchCharacters(name: String): List<CharacterLocal> {
         return charactersDao.searchCharacters(name)
     }
 

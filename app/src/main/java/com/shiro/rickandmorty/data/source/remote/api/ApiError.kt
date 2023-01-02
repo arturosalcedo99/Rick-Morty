@@ -2,8 +2,6 @@ package com.shiro.rickandmorty.data.source.remote.api
 
 import com.shiro.rickandmorty.R
 
-object Empty: ApiError()
-
 sealed class ApiError(val errorMessage: Int? = null): Exception() {
     class Network(errorMessage: Int = R.string.network_error): ApiError(errorMessage)
     class NotFound(errorMessage: Int = R.string.not_found_error): ApiError(errorMessage)

@@ -10,13 +10,13 @@ import com.shiro.rickandmorty.data.models.character.CharacterLocal
 interface CharactersDao {
 
     @Query("SELECT * FROM CharacterLocal")
-    fun getAllCharacters(): List<CharacterLocal>?
+    fun getAllCharacters(): List<CharacterLocal>
 
     @Query("SELECT * FROM CharacterLocal WHERE id = :characterId")
-    fun getCharacterDetails(characterId: Int): CharacterLocal?
+    fun getCharacterDetails(characterId: Int): CharacterLocal
 
     @Query("SELECT * FROM CharacterLocal WHERE name LIKE :name")
-    fun searchCharacters(name: String): List<CharacterLocal>?
+    fun searchCharacters(name: String): List<CharacterLocal>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertCharacter(character: CharacterLocal)
